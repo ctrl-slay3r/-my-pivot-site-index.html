@@ -345,7 +345,11 @@
                 btn.innerText = 'Transmitting...';
                 btn.disabled = true;
 
-                fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: new FormData(form)})
+                // FIX: Convert the form data into URL encoded parameters so Google can parse it
+                const formData = new FormData(form);
+                const data = new URLSearchParams(formData);
+
+                fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: data })
                     .then(response => {
                         form.reset();
                         form.classList.add('hidden');
