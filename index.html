@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO / Professional Meta Tags -->
+    <title>FENSTER | AI & People Strategy Hub</title>
+    <meta name="description" content="Strategic Intelligence for People Transformation and Agentic HR in 2026.">
+    <meta property="og:title" content="FENSTER | AI & People Strategy Hub">
+    <meta property="og:description" content="A Bauhaus-inspired dashboard for HR and Strategy professionals navigating the AI pivot.">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon (Abstract Bauhaus Triangle) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><polygon points=%2250,15 90,85 10,85%22 fill=%22%23ff5f1f%22/></svg>">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&display=swap');
+        
+        :root {
+            --bauhaus-orange: #ff5f1f;
+            --bauhaus-blue: #002366;
+            --bauhaus-red: #d21404;
+            --bauhaus-black: #1a1a1a;
+            --bauhaus-paper: #f2f0e9;
+        }
+
+        body {
+            font-family: 'Archivo', sans-serif;
+            background-color: var(--bauhaus-paper);
+            color: var(--bauhaus-black);
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+        }
+
+        /* Bauhaus Grid System */
+        .b-panel {
+            background: white;
+            border: 4px solid var(--bauhaus-black);
+            box-shadow: 10px 10px 0px var(--bauhaus-black);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .b-panel:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 15px 15px 0px var(--bauhaus-orange);
+        }
+
+        .b-header {
+            border-bottom: 4px solid var(--bauhaus-black);
+            background: var(--bauhaus-black);
+            color: white;
+            padding: 1rem;
+        }
+
+        .b-button {
+            border: 4px solid var(--bauhaus-black);
+            background: white;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.1s;
+            letter-spacing: -0.05em;
+        }
+
+        .b-button:hover {
+            background: var(--bauhaus-orange);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .b-button.active {
+            background: var(--bauhaus-blue);
+            color: white;
+            box-shadow: 4px 4px 0px var(--bauhaus-black);
+        }
+
+        .job-card {
+            border-bottom: 3px solid var(--bauhaus-black);
+            padding: 24px;
+            transition: background 0.2s;
+        }
+
+        .job-card:last-child { border-bottom: none; }
+
+        .job-card:hover {
+            background: var(--bauhaus-paper);
+        }
+
+        .tag {
+            font-size: 0.65rem;
+            padding: 2px 10px;
+            border: 2px solid var(--bauhaus-black);
+            font-weight: 900;
+            text-transform: uppercase;
+            background: white;
+            display: inline-block;
+        }
+
+        .scroll-hide::-webkit-scrollbar { width: 8px; }
+        .scroll-hide::-webkit-scrollbar-thumb { background: var(--bauhaus-black); }
+
+        /* Bauhaus Logo Components */
+        .logo-box { width: 45px; height: 45px; background: var(--bauhaus-red); display: inline-block; margin-right: -15px; }
+        .logo-circle { width: 45px; height: 45px; background: var(--bauhaus-blue); border-radius: 50%; display: inline-block; margin-right: -15px; }
+        .logo-triangle { width: 0; height: 0; border-left: 22.5px solid transparent; border-right: 22.5px solid transparent; border-bottom: 45px solid var(--bauhaus-orange); display: inline-block; }
+
+        /* Typography */
+        .headline-xl { font-size: 5rem; font-weight: 900; letter-spacing: -0.07em; line-height: 0.85; text-transform: uppercase; }
+        
+        /* New User Pulse */
+        .pulse-red {
+            width: 12px; height: 12px; background: var(--bauhaus-red); border-radius: 50%;
+            display: inline-block; animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0px rgba(210, 20, 4, 0.7); }
+            100% { box-shadow: 0 0 0 10px rgba(210, 20, 4, 0); }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+
+    <!-- Header Section -->
+    <header class="max-w-7xl mx-auto mb-16 flex flex-col lg:flex-row justify-between items-start lg:items-end border-b-8 border-black pb-8">
+        <div class="relative">
+            <div class="flex items-center mb-4">
+                <div class="logo-box"></div>
+                <div class="logo-circle"></div>
+                <div class="logo-triangle"></div>
+            </div>
+            <h1 class="headline-xl text-black">FENSTER</h1>
+            <p class="text-2xl font-black uppercase tracking-tighter text-slate-800 mt-2">
+                Strategic Intelligence <span class="text-orange-600">/</span> People Transformation <span class="text-orange-600">/</span> Q2 2026
+            </p>
+        </div>
+        <div class="mt-8 lg:mt-0 lg:text-right border-l-4 lg:border-l-0 lg:border-r-4 border-black pl-6 lg:pr-6">
+            <div class="bg-black text-white px-6 py-2 font-black text-lg mb-2 inline-block">VERSION 4.2</div>
+            <p class="text-sm font-black uppercase tracking-widest">Global Synch: 29 April 2026</p>
+            <p class="text-xs font-bold text-red-600 uppercase mt-1">Live Feed: Active</p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto">
+        <!-- Dashboard Navigation -->
+        <nav class="flex flex-wrap gap-4 mb-12 border-4 border-black p-4 bg-white shadow-[6px_6px_0px_black]">
+            <button onclick="switchTab('jobs')" id="tab-jobs" class="b-button active">01. Market Pulse</button>
+            <button onclick="switchTab('knowledge')" id="tab-knowledge" class="b-button">02. Knowledge Hub</button>
+            <button onclick="showGuide()" class="ml-auto b-button border-red-600 text-red-600 hover:bg-red-600 hover:text-white">
+                <span class="pulse-red mr-2"></span> System Info
+            </button>
+        </nav>
+
+        <!-- Tab Content 1: Market Pulse -->
+        <div id="view-jobs" class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <section class="lg:col-span-8">
+                <div class="b-header flex justify-between items-center bg-orange-600">
+                    <h2 class="text-2xl font-black uppercase italic tracking-tighter text-white">Active Transformation Roles</h2>
+                    <span class="font-mono text-xs font-bold bg-black px-2 py-1 text-white">REALTIME_SCRAPE</span>
+                </div>
+                <div id="job-feed" class="b-panel h-[700px] overflow-y-auto scroll-hide">
+                    <!-- Dynamic Content -->
+                </div>
+            </section>
+
+            <section class="lg:col-span-4">
+                <div class="b-header bg-blue-900">
+                    <h2 class="text-2xl font-black uppercase italic tracking-tighter text-white">Market Leaders</h2>
+                </div>
+                <div id="company-feed" class="b-panel h-[700px] overflow-y-auto scroll-hide bg-slate-50">
+                    <!-- Dynamic Content -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab Content 2: Knowledge Hub -->
+        <div id="view-knowledge" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-8 space-y-10">
+                <div class="b-panel p-10 relative overflow-hidden bg-white">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-orange-500 transform rotate-45 border-4 border-black"></div>
+                    <h2 class="text-4xl font-black uppercase mb-8 border-b-4 border-black pb-4">Resume Architecture: 2026</h2>
+                    <div class="grid md:grid-cols-2 gap-10">
+                        <div class="space-y-4">
+                            <h4 class="text-xl font-black text-orange-600 uppercase">01 // Agentic Orchestration</h4>
+                            <p class="font-bold leading-tight">
+                                Stop listing "AI user." Resumes must now prove <strong>Multi-Agent Orchestration</strong>—the ability to coordinate various autonomous systems to execute end-to-end People Ops tasks.
+                            </p>
+                        </div>
+                        <div class="space-y-4">
+                            <h4 class="text-xl font-black text-blue-800 uppercase">02 // The HITL Audit</h4>
+                            <p class="font-bold leading-tight">
+                                Human-in-the-Loop (HITL) documentation is mandatory. 2026 ATS filters prioritize candidates who document <strong>Bias Calibration</strong> and <strong>Model Oversight</strong> instances.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div class="b-panel p-8 bg-red-600 text-white border-black">
+                        <h3 class="text-2xl font-black uppercase mb-4 italic text-white">The Async Bot Screen</h3>
+                        <p class="font-bold mb-6 text-white">By Q2 2026, 70% of first-round screens are AI-led. Candidates must master <strong>Visual Sentiment Authenticity</strong>—maintaining facial mapping engagement to avoid bot-rejection.</p>
+                        <div class="bg-black p-4 font-mono text-xs uppercase border-2 border-white text-white">Status: Critical Failure Point</div>
+                    </div>
+                    <div class="b-panel p-8">
+                        <h3 class="text-2xl font-black uppercase mb-4">STAR-A Framework</h3>
+                        <p class="text-sm font-black uppercase mb-4 text-slate-500">Situation / Task / Action / Result / AUGMENTATION</p>
+                        <ul class="space-y-4 font-bold text-lg">
+                            <li class="flex items-start gap-3">
+                                <span class="bg-black text-white px-2 py-1 text-xs">A</span>
+                                <span>How did AI extend your cognitive capacity for this result?</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="bg-black text-white px-2 py-1 text-xs">A</span>
+                                <span>What human guardrails did you implement for compliance?</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="lg:col-span-4">
+                <div class="b-panel p-8 bg-black text-white space-y-10">
+                    <h2 class="text-3xl font-black uppercase tracking-tighter text-orange-500">2026 Data Pulse</h2>
+                    <div class="space-y-8">
+                        <div>
+                            <p class="text-xs font-black uppercase tracking-widest text-blue-400 mb-2">Trend 01 // SHRM State of AI</p>
+                            <p class="text-xl font-bold leading-none uppercase text-white">60% of XL Orgs have integrated AI into Core HR Functions.</p>
+                        </div>
+                        <div class="pt-8 border-t border-white/20">
+                            <p class="text-xs font-black uppercase tracking-widest text-orange-400 mb-2">Trend 02 // McKinsey 2026</p>
+                            <p class="text-xl font-bold leading-none uppercase text-white">20% of middle-management roles replaced by AI Agents this year.</p>
+                        </div>
+                        <div class="pt-8 border-t border-white/20">
+                            <p class="text-xs font-black uppercase tracking-widest text-red-500 mb-2">Trend 03 // Skills Currency</p>
+                            <p class="text-xl font-bold leading-none uppercase text-white">46% of firms now hire based on "Skills Taxonomies" over Job Titles.</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- News Grid -->
+        <section class="mt-24">
+            <div class="flex items-center gap-6 mb-12">
+                <h2 class="text-5xl font-black uppercase tracking-tighter">Strategic Intelligence</h2>
+                <div class="flex-1 h-4 bg-black"></div>
+            </div>
+            <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Dynamic Content -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Onboarding Guide -->
+    <div id="onboarding" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden px-4">
+        <div class="b-panel max-w-xl p-12 bg-white">
+            <h2 class="text-5xl font-black uppercase mb-6 tracking-tighter">FENSTER SYSTEM GUIDE</h2>
+            <div class="space-y-6 font-black uppercase text-lg border-l-8 border-orange-600 pl-8 text-black">
+                <p>01. Identify <span class="text-orange-600">Flattening Structures</span> in Market Pulse.</p>
+                <p>02. Adopt <span class="text-blue-700">Agentic Strategies</span> in Knowledge Hub.</p>
+                <p>03. Track <span class="text-red-700">Governance Shifts</span> in Strategic Intelligence.</p>
+            </div>
+            <button onclick="closeGuide()" class="mt-12 b-button w-full text-2xl py-6 hover:shadow-[8px_8px_0px_black] bg-black text-white">Initialize Fenster</button>
+        </div>
+    </div>
+
+    <footer class="max-w-7xl mx-auto mt-32 py-16 border-t-8 border-black flex flex-col lg:flex-row justify-between items-center bg-black text-white p-10">
+        <div>
+            <p class="font-black uppercase text-2xl italic tracking-widest text-white">FENSTER ARCHITECTURE // 2026</p>
+            <p class="text-xs font-bold text-slate-500 uppercase mt-2">Form Follows Intelligence.</p>
+        </div>
+        <div class="flex gap-12 text-sm font-black uppercase mt-8 lg:mt-0">
+            <a href="#" class="text-white hover:text-orange-500 transition-colors">Global Strategy API</a>
+            <a href="#" class="text-white hover:text-orange-500 transition-colors">Compliance Nodes</a>
+            <a href="#" class="text-white hover:text-orange-500 transition-colors">Legal Framework</a>
+        </div>
+    </footer>
+
+    <script>
+        const jobs = [
+            { title: "Head of AI & Human-Collaboration Strategy", company: "ServiceNow Global", location: "London", salary: "£165k-£220k", tags: ["Architecture", "Ops"], posted: "1H" },
+            { title: "Director of Skills Intelligence Platforms", company: "Recruitment Smart", location: "Remote", salary: "$180k-$240k", tags: ["Skills-First", "Data"], posted: "4H" },
+            { title: "Principal AI Ethics & Bias Auditor", company: "PwC Transformation", location: "New York", salary: "$200k-$275k", tags: ["Policy", "Ethics"], posted: "7H" },
+            { title: "Agentic HR Implementation Lead", company: "Workday Enterprise", location: "San Francisco", salary: "$185k-$230k", tags: ["Agentic AI", "Strategy"], posted: "10H" },
+            { title: "Lead AI Talent Systems Architect", company: "ADP Spark", location: "New Jersey", salary: "$210k-$260k", tags: ["Infrastructure", "HR-IT"], posted: "1D" }
+        ];
+
+        const companies = [
+            { name: "ADP", focus: "Agentic HCM Systems", status: "Leader", desc: "Redefining HCM with 'ADP Assist' agents reducing HR admin by 40%." },
+            { name: "Phenom", focus: "Autonomous Sourcing", status: "Growth", desc: "Market leader in behavioral intent analysis for talent discovery." },
+            { name: "Eightfold.ai", focus: "Skills Taxonomy Graph", status: "Active", desc: "Driving the global transition to skills-based hiring ecosystems." },
+            { name: "Recruitics", focus: "Multiplayer HR AI", status: "Emerging", desc: "Specializing in AI agents that coordinate across recruiters and managers." }
+        ];
+
+        const news = [
+            { title: "BCG: 55% of Jobs Reshaped by AI, Not Replaced, in 2026", source: "BCG Global", date: "April 2026", category: "Transformation" },
+            { title: "Aon: 88% of Firms Believe People Drive AI Success, Lack Strategy", source: "Aon PLC", date: "April 28", category: "Human Capital" },
+            { title: "The 'Superagent' Family: Josh Bersin's New HR Unit Model", source: "Bersin", date: "April 2026", category: "Org Design" },
+            { title: "EU AI Act: Mandatory Fairness Audits for Hiring Bots Go Live", source: "Legal Monitor", date: "Q2 2026", category: "Governance" },
+            { title: "CHROs Project 327% Growth in AI Agent Adoption by 2027", source: "ADP Research", date: "April 2026", category: "Markets" }
+        ];
+
+        function showGuide() { document.getElementById('onboarding').classList.remove('hidden'); }
+        function closeGuide() { document.getElementById('onboarding').classList.add('hidden'); }
+
+        function switchTab(tab) {
+            const views = { jobs: 'view-jobs', knowledge: 'view-knowledge' };
+            const tabs = { jobs: 'tab-jobs', knowledge: 'tab-knowledge' };
+            Object.keys(views).forEach(k => {
+                document.getElementById(views[k]).classList.add('hidden');
+                document.getElementById(tabs[k]).classList.remove('active');
+            });
+            document.getElementById(views[tab]).classList.remove('hidden');
+            document.getElementById(tabs[tab]).classList.add('active');
+        }
+
+        function render() {
+            document.getElementById('job-feed').innerHTML = jobs.map(j => `
+                <div class="job-card cursor-pointer group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-black text-2xl uppercase leading-none group-hover:text-orange-600 transition-colors">${j.title}</h3>
+                        <span class="bg-black text-white px-3 py-1 text-xs font-black">${j.posted}</span>
+                    </div>
+                    <p class="text-lg font-black text-blue-800 uppercase mb-4">${j.company} // ${j.location}</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-wrap gap-2">${j.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+                        <span class="font-black text-lg bg-orange-600 text-white px-2">${j.salary}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('company-feed').innerHTML = companies.map(c => `
+                <div class="p-8 border-b-4 border-black hover:bg-orange-100 transition-colors cursor-pointer">
+                    <div class="flex justify-between mb-3">
+                        <h4 class="font-black text-xl uppercase tracking-tighter">${c.name}</h4>
+                        <span class="text-[10px] font-black bg-blue-900 text-white px-2 py-1">${c.status}</span>
+                    </div>
+                    <p class="text-xs font-black uppercase text-blue-800 mb-3 border-l-4 border-blue-800 pl-2">${c.focus}</p>
+                    <p class="text-sm font-bold leading-tight text-slate-700">${c.desc}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('news-grid').innerHTML = news.map(n => `
+                <div class="b-panel p-8 group cursor-pointer hover:bg-orange-600 hover:text-white transition-all">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-orange-600 group-hover:text-white">${n.category}</span>
+                    <h3 class="text-2xl font-black uppercase mt-4 mb-8 leading-tight group-hover:text-white">${n.title}</h3>
+                    <div class="flex justify-between text-[11px] font-black uppercase opacity-60 group-hover:opacity-100 group-hover:text-white">
+                        <span>${n.source}</span>
+                        <span>${n.date}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.onload = () => {
+            render();
+            if (!localStorage.getItem('fenster_init_2026')) {
+                showGuide();
+                localStorage.setItem('fenster_init_2026', 'true');
+            }
+        };
+    </script>
+</body>
+</html>
