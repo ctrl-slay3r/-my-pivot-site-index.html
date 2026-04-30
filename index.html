@@ -79,6 +79,17 @@
             box-shadow: 4px 4px 0px var(--bauhaus-black);
         }
 
+        .b-input {
+            width: 100%;
+            border: 4px solid var(--bauhaus-black);
+            padding: 12px;
+            font-weight: 700;
+            font-family: 'Archivo', sans-serif;
+            margin-bottom: 16px;
+            outline: none;
+        }
+        .b-input:focus { border-color: var(--bauhaus-orange); }
+
         .job-card {
             border-bottom: 3px solid var(--bauhaus-black);
             padding: 24px;
@@ -150,8 +161,14 @@
         <nav class="flex flex-wrap gap-4 mb-12 border-4 border-black p-4 bg-white shadow-[6px_6px_0px_black]">
             <button onclick="switchTab('jobs')" id="tab-jobs" class="b-button active">01. Market Pulse</button>
             <button onclick="switchTab('knowledge')" id="tab-knowledge" class="b-button">02. Knowledge Hub</button>
-            <button onclick="showGuide()" class="ml-auto b-button border-red-600 text-red-600 hover:bg-red-600 hover:text-white">
-                <span class="pulse-red mr-2"></span> System Info
+            
+            <!-- JOIN ROSTER BUTTON -->
+            <button onclick="showRegister()" class="ml-auto b-button border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white">
+                Join Roster
+            </button>
+            
+            <button onclick="showGuide()" class="b-button border-black text-black">
+                <span class="pulse-red mr-2"></span> Info
             </button>
         </nav>
 
@@ -255,6 +272,42 @@
         </section>
     </main>
 
+    <!-- Registration Form Modal -->
+    <div id="register-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden px-4">
+        <div class="b-panel max-w-lg w-full p-8 bg-white relative">
+            <button onclick="closeRegister()" class="absolute top-4 right-4 text-2xl font-black hover:text-red-600">&times;</button>
+            <h2 class="text-4xl font-black uppercase mb-2 tracking-tighter">Join the Roster</h2>
+            <p class="text-sm font-bold text-slate-500 uppercase mb-6">Register for AI Strategy Network Updates</p>
+            
+            <form id="google-sheet-form">
+                <label class="block font-black uppercase text-xs mb-1">Full Name</label>
+                <input type="text" name="name" class="b-input" required placeholder="Jane Doe">
+                
+                <label class="block font-black uppercase text-xs mb-1">Email Address</label>
+                <input type="email" name="email" class="b-input" required placeholder="jane@example.com">
+                
+                <label class="block font-black uppercase text-xs mb-1">LinkedIn Profile URL</label>
+                <input type="url" name="linkedin" class="b-input" placeholder="https://linkedin.com/in/janedoe">
+                
+                <label class="block font-black uppercase text-xs mb-1">Area of Focus</label>
+                <select name="focus" class="b-input bg-white cursor-pointer" required>
+                    <option value="" disabled selected>Select an area...</option>
+                    <option value="AI Strategy">AI Strategy & Transformation</option>
+                    <option value="Recruitment Ops">Recruitment Operations</option>
+                    <option value="HR Tech/Analytics">HR Tech & Analytics</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <button type="submit" id="submit-btn" class="mt-4 w-full b-button bg-black text-white hover:bg-orange-600 text-xl py-4">Submit Registration</button>
+            </form>
+            
+            <!-- Success Message (Hidden by default) -->
+            <div id="success-msg" class="hidden mt-6 p-4 border-4 border-black bg-green-400 text-black font-black uppercase text-center">
+                Registration Successful.
+            </div>
+        </div>
+    </div>
+
     <!-- Onboarding Guide -->
     <div id="onboarding" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden px-4">
         <div class="b-panel max-w-xl p-12 bg-white">
@@ -281,96 +334,8 @@
     </footer>
 
     <script>
-        const jobs = [
-            { title: "Head of AI & Human-Collaboration Strategy", company: "ServiceNow Global", location: "London", salary: "£165k-£220k", tags: ["Architecture", "Ops"], posted: "1H" },
-            { title: "Director of Skills Intelligence Platforms", company: "Recruitment Smart", location: "Remote", salary: "$180k-$240k", tags: ["Skills-First", "Data"], posted: "4H" },
-            { title: "Principal AI Ethics & Bias Auditor", company: "PwC Transformation", location: "New York", salary: "$200k-$275k", tags: ["Policy", "Ethics"], posted: "7H" },
-            { title: "Agentic HR Implementation Lead", company: "Workday Enterprise", location: "San Francisco", salary: "$185k-$230k", tags: ["Agentic AI", "Strategy"], posted: "10H" },
-            { title: "Lead AI Talent Systems Architect", company: "ADP Spark", location: "New Jersey", salary: "$210k-$260k", tags: ["Infrastructure", "HR-IT"], posted: "1D" }
-        ];
-
-        const companies = [
-            { name: "ADP", focus: "Agentic HCM Systems", status: "Leader", desc: "Redefining HCM with 'ADP Assist' agents reducing HR admin by 40%." },
-            { name: "Phenom", focus: "Autonomous Sourcing", status: "Growth", desc: "Market leader in behavioral intent analysis for talent discovery." },
-            { name: "Eightfold.ai", focus: "Skills Taxonomy Graph", status: "Active", desc: "Driving the global transition to skills-based hiring ecosystems." },
-            { name: "Recruitics", focus: "Multiplayer HR AI", status: "Emerging", desc: "Specializing in AI agents that coordinate across recruiters and managers." }
-        ];
-
-        const news = [
-            { title: "BCG: 55% of Jobs Reshaped by AI, Not Replaced, in 2026", source: "BCG Global", date: "April 2026", category: "Transformation" },
-            { title: "Aon: 88% of Firms Believe People Drive AI Success, Lack Strategy", source: "Aon PLC", date: "April 28", category: "Human Capital" },
-            { title: "The 'Superagent' Family: Josh Bersin's New HR Unit Model", source: "Bersin", date: "April 2026", category: "Org Design" },
-            { title: "EU AI Act: Mandatory Fairness Audits for Hiring Bots Go Live", source: "Legal Monitor", date: "Q2 2026", category: "Governance" },
-            { title: "CHROs Project 327% Growth in AI Agent Adoption by 2027", source: "ADP Research", date: "April 2026", category: "Markets" }
-        ];
-
-        function showGuide() { document.getElementById('onboarding').classList.remove('hidden'); }
-        function closeGuide() { document.getElementById('onboarding').classList.add('hidden'); }
-
-        function switchTab(tab) {
-            const views = { jobs: 'view-jobs', knowledge: 'view-knowledge' };
-            const tabs = { jobs: 'tab-jobs', knowledge: 'tab-knowledge' };
-            Object.keys(views).forEach(k => {
-                document.getElementById(views[k]).classList.add('hidden');
-                document.getElementById(tabs[k]).classList.remove('active');
-            });
-            document.getElementById(views[tab]).classList.remove('hidden');
-            document.getElementById(tabs[tab]).classList.add('active');
-        }
-
-        function render() {
-            document.getElementById('job-feed').innerHTML = jobs.map(j => `
-                <div class="job-card cursor-pointer group">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="font-black text-2xl uppercase leading-none group-hover:text-orange-600 transition-colors">${j.title}</h3>
-                        <span class="bg-black text-white px-3 py-1 text-xs font-black">${j.posted}</span>
-                    </div>
-                    <p class="text-lg font-black text-blue-800 uppercase mb-4">${j.company} // ${j.location}</p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex flex-wrap gap-2">${j.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-                        <span class="font-black text-lg bg-orange-600 text-white px-2">${j.salary}</span>
-                    </div>
-                </div>
-            `).join('');
-
-            document.getElementById('company-feed').innerHTML = companies.map(c => `
-                <div class="p-8 border-b-4 border-black hover:bg-orange-100 transition-colors cursor-pointer">
-                    <div class="flex justify-between mb-3">
-                        <h4 class="font-black text-xl uppercase tracking-tighter">${c.name}</h4>
-                        <span class="text-[10px] font-black bg-blue-900 text-white px-2 py-1">${c.status}</span>
-                    </div>
-                    <p class="text-xs font-black uppercase text-blue-800 mb-3 border-l-4 border-blue-800 pl-2">${c.focus}</p>
-                    <p class="text-sm font-bold leading-tight text-slate-700">${c.desc}</p>
-                </div>
-            `).join('');
-
-            document.getElementById('news-grid').innerHTML = news.map(n => `
-                <div class="b-panel p-8 group cursor-pointer hover:bg-orange-600 hover:text-white transition-all">
-                    <span class="text-[10px] font-black uppercase tracking-widest text-orange-600 group-hover:text-white">${n.category}</span>
-                    <h3 class="text-2xl font-black uppercase mt-4 mb-8 leading-tight group-hover:text-white">${n.title}</h3>
-                    <div class="flex justify-between text-[11px] font-black uppercase opacity-60 group-hover:opacity-100 group-hover:text-white">
-                        <span>${n.source}</span>
-                        <span>${n.date}</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        window.onload = () => {
-            render();
-            if (!localStorage.getItem('fenster_init_2026')) {
-                showGuide();
-                localStorage.setItem('fenster_init_2026', 'true');
-            }
-        };
-    </script>
-</body>
-    </footer>
-
-    <script>
         // --- GOOGLE SHEETS FORM LOGIC ---
-        // Instructions: Replace the URL below with your Google Apps Script Web App URL
-        const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbwTEDxiEPDweexLEE0wtk16D6yh38neuZHDVdiV-CX-8Mi2O0qyEc_mwWND4KvitDGX9Q/exec; // <-- PASTE YOUR GOOGLE URL HERE
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwTEDxiEPDweexLEE0wtk16D6yh38neuZHDVdiV-CX-8Mi2O0qyEc_mwWND4KvitDGX9Q/exec'; 
 
         const form = document.getElementById('google-sheet-form');
         if(form) {
@@ -409,20 +374,26 @@
 
         // --- DASHBOARD LOGIC ---
         const jobs = [
-            { title: "Head of AI Strategy", company: "ServiceNow", location: "London", salary: "£165k-£220k", tags: ["Architecture"], posted: "1H" },
-            { title: "Director of Skills Platforms", company: "Recruitment Smart", location: "Remote", salary: "$180k-$240k", tags: ["Data"], posted: "4H" },
-            { title: "AI Ethics Auditor", company: "PwC", location: "New York", salary: "$200k-$275k", tags: ["Policy"], posted: "7H" }
+            { title: "Head of AI & Human-Collaboration Strategy", company: "ServiceNow Global", location: "London", salary: "£165k-£220k", tags: ["Architecture", "Ops"], posted: "1H" },
+            { title: "Director of Skills Intelligence Platforms", company: "Recruitment Smart", location: "Remote", salary: "$180k-$240k", tags: ["Skills-First", "Data"], posted: "4H" },
+            { title: "Principal AI Ethics & Bias Auditor", company: "PwC Transformation", location: "New York", salary: "$200k-$275k", tags: ["Policy", "Ethics"], posted: "7H" },
+            { title: "Agentic HR Implementation Lead", company: "Workday Enterprise", location: "San Francisco", salary: "$185k-$230k", tags: ["Agentic AI", "Strategy"], posted: "10H" },
+            { title: "Lead AI Talent Systems Architect", company: "ADP Spark", location: "New Jersey", salary: "$210k-$260k", tags: ["Infrastructure", "HR-IT"], posted: "1D" }
         ];
 
         const companies = [
-            { name: "ADP", focus: "Agentic HCM Systems", status: "Leader", desc: "Redefining HCM with agents." },
-            { name: "Phenom", focus: "Autonomous Sourcing", status: "Growth", desc: "Market leader in talent discovery." }
+            { name: "ADP", focus: "Agentic HCM Systems", status: "Leader", desc: "Redefining HCM with 'ADP Assist' agents reducing HR admin by 40%." },
+            { name: "Phenom", focus: "Autonomous Sourcing", status: "Growth", desc: "Market leader in behavioral intent analysis for talent discovery." },
+            { name: "Eightfold.ai", focus: "Skills Taxonomy Graph", status: "Active", desc: "Driving the global transition to skills-based hiring ecosystems." },
+            { name: "Recruitics", focus: "Multiplayer HR AI", status: "Emerging", desc: "Specializing in AI agents that coordinate across recruiters and managers." }
         ];
 
         const news = [
-            { title: "BCG: 55% of Jobs Reshaped by AI in 2026", source: "BCG", date: "April 2026", category: "Transformation" },
-            { title: "The 'Superagent' Family: New HR Unit", source: "Bersin", date: "April 2026", category: "Org Design" },
-            { title: "EU AI Act: Mandatory Fairness Audits Go Live", source: "Legal", date: "Q2 2026", category: "Governance" }
+            { title: "BCG: 55% of Jobs Reshaped by AI, Not Replaced, in 2026", source: "BCG Global", date: "April 2026", category: "Transformation" },
+            { title: "Aon: 88% of Firms Believe People Drive AI Success, Lack Strategy", source: "Aon PLC", date: "April 28", category: "Human Capital" },
+            { title: "The 'Superagent' Family: Josh Bersin's New HR Unit Model", source: "Bersin", date: "April 2026", category: "Org Design" },
+            { title: "EU AI Act: Mandatory Fairness Audits for Hiring Bots Go Live", source: "Legal Monitor", date: "Q2 2026", category: "Governance" },
+            { title: "CHROs Project 327% Growth in AI Agent Adoption by 2027", source: "ADP Research", date: "April 2026", category: "Markets" }
         ];
 
         function showGuide() { document.getElementById('onboarding').classList.remove('hidden'); }
